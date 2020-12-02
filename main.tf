@@ -197,18 +197,13 @@ data "aws_region" "default" {
 }
 
 module "codebuild" {
-  source                = "git::https://github.com/cloudposse/terraform-aws-codebuild.git?ref=tags/0.25.0"
-  enabled               = module.this.enabled
-  namespace             = module.this.namespace
-  name                  = module.this.name
-  stage                 = module.this.stage
+  source                = "git::https://github.com/joe-niland/terraform-aws-codebuild.git?ref=update-to-context-tf"
+  context               = module.this.context
   build_image           = var.build_image
   build_compute_type    = var.build_compute_type
   build_timeout         = var.build_timeout
   buildspec             = var.buildspec
-  delimiter             = module.this.delimiter
   attributes            = concat(module.this.attributes, ["build"])
-  tags                  = module.this.tags
   privileged_mode       = var.privileged_mode
   aws_region            = var.region != "" ? var.region : data.aws_region.default.name
   aws_account_id        = var.aws_account_id != "" ? var.aws_account_id : data.aws_caller_identity.default.account_id
