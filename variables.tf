@@ -8,12 +8,6 @@ variable "service_name" {
   description = "ECS Service Name"
 }
 
-variable "github_anonymous" {
-  type        = bool
-  description = "Github Anonymous API (if `true`, token must not be set as GITHUB_TOKEN or `github_token`)"
-  default     = false
-}
-
 variable "github_oauth_token" {
   type        = string
   description = "GitHub OAuth Token with permissions to access private repositories"
@@ -172,9 +166,14 @@ variable "cache_type" {
   description = "The type of storage that will be used for the AWS CodeBuild project cache. Valid values: NO_CACHE, LOCAL, and S3.  Defaults to S3.  If cache_type is S3, it will create an S3 bucket for storing codebuild cache inside"
 }
 
+variable "cache_bucket_suffix_enabled" {
+  type        = bool
+  default     = true
+  description = "The cache bucket generates a random 13 character string to generate a unique bucket name. If set to false it uses terraform-null-label's id value. It only works when cache_type is 'S3'"
+}
+
 variable "local_cache_modes" {
   type        = list(string)
   default     = []
   description = "Specifies settings that AWS CodeBuild uses to store and reuse build dependencies. Valid values: LOCAL_SOURCE_CACHE, LOCAL_DOCKER_LAYER_CACHE, and LOCAL_CUSTOM_CACHE"
 }
-
